@@ -260,19 +260,15 @@ async def conversation(request: Request):
     extracted = await extract_intent_via_llm(user_text)
 
     resp = VoiceResponse()
-
     # Step 2: Handle Missing Info (Loops back as per your Activity Diagram)
     if not extracted.is_complete:
         resp.say("Could you please specify your destination and travel date?")
         gather = resp.gather(input="speech dtmf", action=webhook("/conversation"), timeout=5)
         return Response(content=str(resp), media_type="application/xml")
-
     # Step 3: Database Query
     db_records = await query_railway_database(extracted)
-
     # Step 4: AI Voice Response Synthesis
     spoken_answer = await generate_conversational_response(user_text, db_records)
-
     # Step 5: Playback to Passenger
     resp.say(spoken_answer)
     
