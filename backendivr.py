@@ -237,10 +237,8 @@ async def voice_start(request: Request):
 # ===========================
 @app.post("/conversation")
 async def conversation(request: Request):
-    """
-    Handles speech or keypad (DTMF) input during an active call using LLM.
-    """
-    form = await request.form()
+  
+  form = await request.form()
     call_id = form.get("CallSid") or form.get("CallSid", "")
     speech_result = form.get("SpeechResult") or ""
     digits = form.get("Digits") or ""
