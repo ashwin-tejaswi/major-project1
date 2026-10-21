@@ -283,8 +283,7 @@ async def conversation(request: Request):
         timeout=5
     )
     gather.say("Is there anything else you’d like help with?")
-
-    return Response(content=str(resp), media_type="application/xml")
+return Response(content=str(resp), media_type="application/xml")
 
 # ===========================
 # /call/start — start outbound call via Twilio REST API
